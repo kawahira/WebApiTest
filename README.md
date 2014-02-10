@@ -11,4 +11,7 @@ consoleConnection.exe http://google.co.jp
 またエラーレベルに StatusCodeを返します。
 （なので正常終了時に200が返ってくる仕様です）
 
-Jenkinsなどで利用する場合には注意が必要です。
+※Jenkinsなどで利用する場合には注意が必要です。
+
+StatusCodeで タイムアウトや例外などでの終了時は -1 が帰ります
+
