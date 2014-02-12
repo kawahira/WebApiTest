@@ -15,3 +15,5 @@ consoleConnection.exe http://google.co.jp
 
 StatusCodeで タイムアウトや例外などでの終了時は -1 が帰ります
 
+test...!
+
