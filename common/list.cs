@@ -7,10 +7,10 @@ namespace Command
     /// <summary>
     /// コマンドとパラメーターをペアで保持する
     /// </summary>
-    class Pair<K, V>
+    public class Pair<K, V>
     {
-        K key;
-        V val;
+        private K key;
+        private V val;
         /// <summary>
         /// コンストラクタ
         /// </summary>
