@@ -1,74 +1,98 @@
-﻿// <copyright file="commandList.cs">(C)2013</copyright>
+﻿// <copyright file="list.cs">(C)2013</copyright>
 using System;
 using System.Collections.Generic;
 
 namespace Command
 {
     /// <summary>
-    /// コマンドのリスト管理
+    /// コマンドとパラメーターをペアで保持する
+    /// </summary>
+    class Pair<K, V>
+    {
+        K key;
+        V val;
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public Pair(K k, V v)
+        {
+            key = k;
+            val = v;
+        }
+        /// <summary>
+        /// Key情報(First)
+        /// </summary>
+        public K Key { get { return this.key; } set { this.key = value; } }
+        /// <summary>
+        /// Value情報(Sencond)
+        /// </summary>
+        public V Value { get { return this.val; } set { this.val = value; } }
+    }
+    /// <summary>
+    /// コマンドのリストの文字列変換機能付き
     /// 要求定義：同一コマンドが複数存在しない仕様
     /// 　　　　：パラメーターはテストのために変更可能
     /// </summary>
-    public class cList
+    public class PairList
     {
-        private List<cParam> cmdList = new List<cParam>();
-        private string separate = ",";
-        /// <summary>
-        /// コンストラクター
-        /// </summary>
-        public cList()
-        {
-        }
+        private List<Pair<string, string>> pair = new List<Pair<string, string>>();
+        private string separatePair = ",";
+        private string separateParam = ":";
         /// <summary>
         /// セパレート文字列を設定する
         /// </summary>
         public void SetSeparate(string sep)
         {
-            separate = sep;
+            separatePair = sep;
         }
         /// <summary>
         /// パラメータを設定する string , string
         /// </summary>
-        public void SetParameter(string cmdname, string param)
+        public void Set(string cmdname, string param)
         {
-            int index = cmdList.FindIndex(delegate(cParam s)
+            int index = pair.FindIndex(delegate(Pair<string, string> s)
             {
-                return s.GetCommand() == cmdname;
+                return s.Key == cmdname;
             });
             if (index == -1)
             {
-                cmdList.Add(new cParam(cmdname, param));
+                pair.Add(new Pair<string, string>(cmdname, param));
             }
             else
             {
-                cmdList[index].Set(cmdname, param);
+                pair[index].Key = cmdname;
+                pair[index].Value = param;
             }
         }
         /// <summary>
         /// パラメータを設定する string , int
         /// </summary>
-        public void SetParameter(string cmdname, int param)
+        public void Set(string cmdname, int param)
         {
-            SetParameter(cmdname, param.ToString());
+            Set(cmdname, param.ToString());
         }
         /// <summary>
         /// パラメータを設定する string , int
         /// </summary>
-        public void SetParameter(string cmdname)
+        public void Set(string cmdname)
         {
-            SetParameter(cmdname, null);
+            Set(cmdname, null);
         }
         /// <summary>
         /// パラメータを取得する
         /// </summary>
-        public string GetParameter()
+        public string Get()
         {
             string result = null;
-            for (int i = 0; i < cmdList.Count ; ++i)
+            for (int i = 0; i < pair.Count; ++i)
             {
-                if (cmdList[i].GetCommand() != null)
+                if (pair[i].Key != null)
                 {
-                    result += separate + cmdList[i].Get();
+                    result += separatePair + pair[i].Key;
+                }
+                if (pair[i].Value != null)
+                {
+                    result += separateParam + pair[i].Value;
                 }
             }
             return result;

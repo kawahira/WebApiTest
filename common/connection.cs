@@ -33,17 +33,7 @@ namespace Network
         {
             result.Initialize();
             result.url = baseurl;
-            HttpWebRequest webreq = null;
-            try
-            {
-                webreq = (HttpWebRequest)WebRequest.Create(result.url);
-            }
-            catch ( SystemException e)
-            {
-                result.data = e.Message;
-                result.returnCode = -1;
-                return result.returnCode;
-            }
+            HttpWebRequest webreq = (HttpWebRequest)WebRequest.Create(result.url);
             //メソッドにPOSTを指定
             webreq.Timeout = timeoutLimit;
             webreq.Method = "GET";

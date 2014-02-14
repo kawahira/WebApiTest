@@ -71,34 +71,34 @@ namespace testCommon
             string strChange = null;
             int max = 3;
             int ofsIndex = -1;
-            Command.cList list = new Command.cList();
+            Command.PairList list = new Command.PairList();
 
             // 初期化状態のテスト
-            Assert.IsNull(list.GetParameter());
+            Assert.IsNull(list.Get());
 
             // パラメータの作成テスト
             for (int i = 0; i < max; ++i)
             {
-                list.SetParameter(passStrings[0] + i.ToString(), passStrings[1] + i.ToString());
+                list.Set(passStrings[0] + i.ToString(), passStrings[1] + i.ToString());
             }
-            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.GetParameter());
+            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.Get());
 
             // セパレートを入れ替えるテスト
             separateList = "&";
             list.SetSeparate(separateList);
-            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.GetParameter());
+            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.Get());
 
             // パラメーターを入れ替えるテスト
             strChange = "changed";
             ofsIndex = 1;
-            list.SetParameter(passStrings[0] + ofsIndex.ToString(), strChange + ofsIndex.ToString());
-            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.GetParameter());
+            list.Set(passStrings[0] + ofsIndex.ToString(), strChange + ofsIndex.ToString());
+            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.Get());
 
             // パラメータを削除するテスト
             strChange = null;
             ofsIndex = 1;
-            list.SetParameter(passStrings[0] + ofsIndex.ToString(), strChange + ofsIndex.ToString());
-            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.GetParameter());
+            list.Set(passStrings[0] + ofsIndex.ToString(), strChange + ofsIndex.ToString());
+            Assert.AreEqual(ListBuild(passStrings, max, separateList, separateCmd, ofsIndex, strChange), list.Get());
         }
     }
 }
